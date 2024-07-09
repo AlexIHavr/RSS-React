@@ -1,4 +1,4 @@
-import { PureComponent, ReactNode, createRef } from 'react';
+import { KeyboardEvent, PureComponent, ReactNode, createRef } from 'react';
 import { getApiResults } from 'api/api.helpers';
 import { Loader } from 'components/loader/Loader';
 import { Results } from 'components/results/Results';
@@ -17,18 +17,13 @@ export class Search extends PureComponent<unknown, SearchState> {
 
   componentDidMount(): void {
     this.onClickHandler(LocalStorageService.getData('searchValue'));
-    document.addEventListener('keyup', this.onEnterHandler);
   }
 
   componentDidUpdate(): void {
     if (this.state.isError) throw new Error('crash app');
   }
 
-  componentWillUnmount(): void {
-    document.removeEventListener('keyup', this.onEnterHandler);
-  }
-
-  onEnterHandler = (event: KeyboardEvent): void => {
+  onEnterHandler = (event: KeyboardEvent<HTMLInputElement>): void => {
     if (event.key !== 'Enter') return;
 
     this.onClickHandler();
@@ -63,7 +58,12 @@ export class Search extends PureComponent<unknown, SearchState> {
     return (
       <>
         <header className={styles.header}>
-          <input ref={this.inputRef} type="text" placeholder="Type text..." />
+          <input
+            ref={this.inputRef}
+            type="text"
+            placeholder="Type text..."
+            onKeyUp={this.onEnterHandler}
+          />
           <button className={styles.searchButton} onClick={() => this.onClickHandler()}>
             Search
           </button>
