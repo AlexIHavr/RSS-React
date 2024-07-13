@@ -4,7 +4,7 @@ import checker from 'vite-plugin-checker';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
-  base: '/alexihavr-REACT2024Q3/class-components/',
+  base: '/alexihavr-REACT2024Q3/hooks-and-routing/',
   plugins: [
     tsconfigPaths(),
     checker({
