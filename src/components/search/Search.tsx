@@ -43,10 +43,11 @@ export const Search: FC = () => {
 
         LocalStorageService.saveData('searchValue', value);
 
+        setSearchParams({ [SearchParams.PAGE]: String(page) });
+
         current.value = value;
       } catch {
         setPage(1);
-        setSearchParams({ [SearchParams.PAGE]: String(1) });
       } finally {
         setIsLoading(false);
       }
@@ -64,10 +65,13 @@ export const Search: FC = () => {
     setIsError(true);
   };
 
-  const setPageHandler = (pageNumber: number): void => {
-    setSearchParams({ [SearchParams.PAGE]: String(pageNumber) });
-    setPage(pageNumber);
-  };
+  const setPageHandler = useCallback(
+    (pageNumber: number): void => {
+      setSearchParams({ [SearchParams.PAGE]: String(pageNumber) });
+      setPage(pageNumber);
+    },
+    [setSearchParams],
+  );
 
   useEffect(() => {
     onClickHandler(LocalStorageService.getData('searchValue') ?? '');

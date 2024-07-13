@@ -1,10 +1,10 @@
 import { RESULTS_COUNT_ON_PAGE } from 'api/api.consts';
-import { FC } from 'react';
+import { FC, memo } from 'react';
 
 import { ResultsProps } from './results.interfaces';
 import styles from './results.module.scss';
 
-export const Results: FC<ResultsProps> = ({ results, count, page, setPageHandler }) => {
+export const Results: FC<ResultsProps> = memo(({ results, count, page, setPageHandler }) => {
   const pages = new Array(Math.ceil(count / RESULTS_COUNT_ON_PAGE)).fill(null);
 
   return (
@@ -35,4 +35,4 @@ export const Results: FC<ResultsProps> = ({ results, count, page, setPageHandler
       )}
     </main>
   );
-};
+});
