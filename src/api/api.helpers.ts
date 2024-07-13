@@ -1,11 +1,11 @@
+import { SearchParams } from './api.consts';
 import { ApiData } from './api.interfaces';
-import { ApiResults } from './api.types';
 
-const API_URL = 'https://swapi.dev/api/films';
+const API_URL = 'https://swapi.dev/api/people';
 
-export async function getApiResults(searchValue: string): Promise<ApiResults> {
-  const response = await fetch(`${API_URL}?search=${searchValue}`);
+export async function getApiData(searchValue: string, page: number): Promise<ApiData> {
+  const response = await fetch(`${API_URL}?search=${searchValue}&${SearchParams.PAGE}=${page}`);
   const data = (await response.json()) as ApiData;
 
-  return data.results;
+  return data;
 }
