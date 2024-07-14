@@ -38,16 +38,18 @@ export const Search: FC = () => {
       try {
         const { count, results } = await getApiData(value, page);
 
-        setResults(results);
-        setCount(count);
+        if (count && results) {
+          setResults(results);
+          setCount(count);
 
-        LocalStorageService.saveData('searchValue', value);
+          LocalStorageService.saveData('searchValue', value);
 
-        setSearchParams({ [SearchParams.PAGE]: String(page) });
+          setSearchParams({ [SearchParams.PAGE]: String(page) });
 
-        current.value = value;
-      } catch {
-        setPage(1);
+          current.value = value;
+        } else {
+          setPage(1);
+        }
       } finally {
         setIsLoading(false);
       }
