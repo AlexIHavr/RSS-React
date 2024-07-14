@@ -17,6 +17,7 @@ export const Results: FC<ResultsProps> = memo(
     const setDetailsHandler = useCallback(
       async (name: string): Promise<void> => {
         setIsLoading(true);
+
         try {
           const data = await getApiItem(name);
           setDetails(data);
@@ -25,10 +26,10 @@ export const Results: FC<ResultsProps> = memo(
             return prevParams;
           });
         } finally {
-          setIsLoading(false);
+          if (results.length) setIsLoading(false);
         }
       },
-      [setDetails, setIsLoading, setSearchParams],
+      [results.length, setDetails, setIsLoading, setSearchParams],
     );
 
     useEffect(() => {

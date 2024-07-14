@@ -28,7 +28,7 @@ export const Search: FC = () => {
   if (isError) throw new Error('crash app');
 
   const onSearchHandler = useCallback(
-    async (savedValue?: string | null, currentPage: number = page): Promise<void> => {
+    async (currentPage: number, savedValue?: string | null): Promise<void> => {
       const current = inputRef.current;
 
       if (!current) return;
@@ -54,13 +54,13 @@ export const Search: FC = () => {
         setIsLoading(false);
       }
     },
-    [page],
+    [],
   );
 
   const onEnterHandler = (event: KeyboardEvent<HTMLInputElement>): void => {
     if (event.key !== 'Enter') return;
 
-    onSearchHandler();
+    onSearchHandler(page);
   };
 
   const onCrashAppHandler = (): void => {
@@ -74,7 +74,7 @@ export const Search: FC = () => {
         prevParams.set(SearchParams.PAGE, String(pageNumber));
         return prevParams;
       });
-      onSearchHandler();
+      onSearchHandler(pageNumber);
     },
     [onSearchHandler, setSearchParams],
   );
@@ -90,7 +90,7 @@ export const Search: FC = () => {
   useEffect(() => {
     if (currentPage !== page) {
       setPage(currentPage);
-      onSearchHandler(LocalStorageService.getData('searchValue') ?? '', currentPage);
+      onSearchHandler(currentPage, LocalStorageService.getData('searchValue') ?? '');
     }
   }, [currentPage, page, onSearchHandler]);
 
@@ -99,7 +99,7 @@ export const Search: FC = () => {
       <div className={styles.wrapper}>
         <header className={styles.header}>
           <input ref={inputRef} type="text" placeholder="Type text..." onKeyUp={onEnterHandler} />
-          <button className={styles.searchButton} onClick={() => onSearchHandler()}>
+          <button className={styles.searchButton} onClick={() => onSearchHandler(page)}>
             Search
           </button>
           <button className={styles.crashButton} onClick={onCrashAppHandler}>
