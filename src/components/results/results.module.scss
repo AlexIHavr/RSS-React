@@ -1,0 +1,23 @@
+.results {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+
+  padding: 20px;
+
+  text-align: justify;
+}
+
+.title {
+  text-align: center;
+}
+
+.description {
+  text-indent: 20px;
+
+  &::first-letter {
+    font-size: 1.3em;
+    font-size: bold;
+  }
+}
