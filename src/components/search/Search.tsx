@@ -18,7 +18,7 @@ export const Search: FC = () => {
 
   const currentPage = getCurrentPage(searchParams.get(SearchParams.PAGE));
 
-  const [page, setPage] = useState(currentPage);
+  const [page, setPage] = useState(0);
   const [count, setCount] = useState(0);
   const [results, setResults] = useState<ApiResults>([]);
   const [details, setDetails] = useState<ApiResult | null>(null);
@@ -27,8 +27,8 @@ export const Search: FC = () => {
 
   if (isError) throw new Error('crash app');
 
-  const onClickHandler = useCallback(
-    async (savedValue?: string | null): Promise<void> => {
+  const onSearchHandler = useCallback(
+    async (savedValue?: string | null, currentPage: number = page): Promise<void> => {
       const current = inputRef.current;
 
       if (!current) return;
@@ -38,15 +38,13 @@ export const Search: FC = () => {
       setIsLoading(true);
 
       try {
-        const { count, results } = await getApiData(value, page);
+        const { count, results } = await getApiData(value, currentPage);
 
         if (count && results) {
           setResults(results);
           setCount(count);
 
           LocalStorageService.saveData('searchValue', value);
-
-          setSearchParams({ [SearchParams.PAGE]: String(page) });
 
           current.value = value;
         } else {
@@ -56,13 +54,13 @@ export const Search: FC = () => {
         setIsLoading(false);
       }
     },
-    [page, setSearchParams],
+    [page],
   );
 
   const onEnterHandler = (event: KeyboardEvent<HTMLInputElement>): void => {
     if (event.key !== 'Enter') return;
 
-    onClickHandler();
+    onSearchHandler();
   };
 
   const onCrashAppHandler = (): void => {
@@ -71,22 +69,37 @@ export const Search: FC = () => {
 
   const setPageHandler = useCallback(
     (pageNumber: number): void => {
-      setSearchParams({ [SearchParams.PAGE]: String(pageNumber) });
       setPage(pageNumber);
+      setSearchParams((prevParams) => {
+        prevParams.set(SearchParams.PAGE, String(pageNumber));
+        return prevParams;
+      });
+      onSearchHandler();
     },
-    [setSearchParams],
+    [onSearchHandler, setSearchParams],
   );
 
+  const closeDetailsHandler = (): void => {
+    setDetails(null);
+    setSearchParams((prevParams) => {
+      prevParams.set(SearchParams.DETAILS, '');
+      return prevParams;
+    });
+  };
+
   useEffect(() => {
-    onClickHandler(LocalStorageService.getData('searchValue') ?? '');
-  }, [onClickHandler]);
+    if (currentPage !== page) {
+      setPage(currentPage);
+      onSearchHandler(LocalStorageService.getData('searchValue') ?? '', currentPage);
+    }
+  }, [currentPage, page, onSearchHandler]);
 
   return (
     <div className={styles.pages}>
       <div className={styles.wrapper}>
         <header className={styles.header}>
           <input ref={inputRef} type="text" placeholder="Type text..." onKeyUp={onEnterHandler} />
-          <button className={styles.searchButton} onClick={() => onClickHandler()}>
+          <button className={styles.searchButton} onClick={() => onSearchHandler()}>
             Search
           </button>
           <button className={styles.crashButton} onClick={onCrashAppHandler}>
@@ -111,7 +124,7 @@ export const Search: FC = () => {
           <span>Eye color: {details.eye_color}</span>
           <span>Hair color: {details.hair_color}</span>
           <span>Skin color: {details.skin_color}</span>
-          <button onClick={() => setDetails(null)}>Close</button>
+          <button onClick={closeDetailsHandler}>Close</button>
         </div>
       )}
       {isLoading && <Loader />}
