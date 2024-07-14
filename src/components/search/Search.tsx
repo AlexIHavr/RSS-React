@@ -1,5 +1,6 @@
 import { SearchParams } from 'api/api.consts';
 import { getApiData } from 'api/api.helpers';
+import { ApiResult } from 'api/api.interfaces';
 import { ApiResults } from 'api/api.types';
 import { Loader } from 'components/loader/Loader';
 import { Results } from 'components/results/Results';
@@ -20,6 +21,7 @@ export const Search: FC = () => {
   const [page, setPage] = useState(currentPage);
   const [count, setCount] = useState(0);
   const [results, setResults] = useState<ApiResults>([]);
+  const [details, setDetails] = useState<ApiResult | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
 
@@ -80,18 +82,39 @@ export const Search: FC = () => {
   }, [onClickHandler]);
 
   return (
-    <>
-      <header className={styles.header}>
-        <input ref={inputRef} type="text" placeholder="Type text..." onKeyUp={onEnterHandler} />
-        <button className={styles.searchButton} onClick={() => onClickHandler()}>
-          Search
-        </button>
-        <button className={styles.crashButton} onClick={onCrashAppHandler}>
-          Crash app
-        </button>
-      </header>
-      <Results results={results} count={count} page={page} setPageHandler={setPageHandler} />
+    <div className={styles.pages}>
+      <div className={styles.wrapper}>
+        <header className={styles.header}>
+          <input ref={inputRef} type="text" placeholder="Type text..." onKeyUp={onEnterHandler} />
+          <button className={styles.searchButton} onClick={() => onClickHandler()}>
+            Search
+          </button>
+          <button className={styles.crashButton} onClick={onCrashAppHandler}>
+            Crash app
+          </button>
+        </header>
+        <Results
+          results={results}
+          count={count}
+          page={page}
+          setPageHandler={setPageHandler}
+          setDetails={setDetails}
+          setIsLoading={setIsLoading}
+        />
+      </div>
+      {details && (
+        <div className={styles.details}>
+          <h2>Details:</h2>
+          <span>Name: {details.name}</span>
+          <span>Mass: {details.mass}</span>
+          <span>Height: {details.height}</span>
+          <span>Eye color: {details.eye_color}</span>
+          <span>Hair color: {details.hair_color}</span>
+          <span>Skin color: {details.skin_color}</span>
+          <button onClick={() => setDetails(null)}>Close</button>
+        </div>
+      )}
       {isLoading && <Loader />}
-    </>
+    </div>
   );
 };

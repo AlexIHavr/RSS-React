@@ -1,9 +1,3 @@
-export type ApiResults = {
-  name: string;
-  height: string;
-  mass: string;
-  hair_color: string;
-  skin_color: string;
-  eye_color: string;
-  gender: string;
-}[];
+import { ApiResult } from './api.interfaces';
+
+export type ApiResults = ApiResult[];

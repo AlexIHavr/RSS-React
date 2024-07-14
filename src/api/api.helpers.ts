@@ -1,5 +1,5 @@
 import { SearchParams } from './api.consts';
-import { ApiData } from './api.interfaces';
+import { ApiData, ApiResult } from './api.interfaces';
 
 const API_URL = 'https://swapi.dev/api/people';
 
@@ -8,4 +8,11 @@ export async function getApiData(searchValue: string, page: number): Promise<Api
   const data = (await response.json()) as ApiData;
 
   return data;
+}
+
+export async function getApiItem(name: string): Promise<ApiResult | null> {
+  const response = await fetch(`${API_URL}?search=${name}`);
+  const data = (await response.json()) as ApiData;
+
+  return data.results?.[0] ?? null;
 }
