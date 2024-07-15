@@ -1,0 +1,14 @@
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+
+  width: 40%;
+  padding-top: 105px;
+
+  font-weight: bold;
+  text-align: center;
+
+  border-left: 1px solid black;
+}
