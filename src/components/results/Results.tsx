@@ -1,6 +1,6 @@
 import { SearchParams } from 'api/api.consts';
 import { getApiItem } from 'api/api.helpers';
-import { FC, memo, useCallback, useEffect } from 'react';
+import { FC, memo, useCallback, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { ResultsProps } from './results.interfaces';
@@ -8,6 +8,7 @@ import styles from './results.module.scss';
 
 export const Results: FC<ResultsProps> = memo(({ results, setDetails, setIsLoading }) => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const [detailsParams, setDetailsParams] = useState('');
 
   const currentDetails = searchParams.get(SearchParams.DETAILS);
 
@@ -17,7 +18,9 @@ export const Results: FC<ResultsProps> = memo(({ results, setDetails, setIsLoadi
 
       try {
         const data = await getApiItem(name);
+
         setDetails(data);
+        setDetailsParams(name);
         setSearchParams((prevParams) => {
           prevParams.set(SearchParams.DETAILS, name);
           return prevParams;
@@ -30,8 +33,10 @@ export const Results: FC<ResultsProps> = memo(({ results, setDetails, setIsLoadi
   );
 
   useEffect(() => {
-    if (currentDetails) setDetailsHandler(currentDetails);
-  }, [currentDetails, setDetailsHandler]);
+    if (currentDetails && detailsParams !== currentDetails) {
+      setDetailsHandler(currentDetails);
+    }
+  }, [currentDetails, detailsParams, setDetailsHandler]);
 
   return (
     <div className={styles.results}>
