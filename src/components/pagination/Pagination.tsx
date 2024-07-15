@@ -4,7 +4,7 @@ import { FC, memo } from 'react';
 import { PaginationProps } from './pagination.interfaces';
 import styles from './pagination.module.scss';
 
-export const Pagination: FC<PaginationProps> = memo(({ page, count, setPageHandler }) => {
+export const Pagination: FC<PaginationProps> = memo(({ page, count, onSetPageHandler }) => {
   const pages = new Array(Math.ceil(count / RESULTS_COUNT_ON_PAGE)).fill(null);
 
   return (
@@ -13,7 +13,7 @@ export const Pagination: FC<PaginationProps> = memo(({ page, count, setPageHandl
         <div
           key={index}
           className={styles.page + ' ' + (page === index + 1 ? styles.active : '')}
-          onClick={() => setPageHandler(index + 1)}
+          onClick={() => onSetPageHandler(index + 1)}
         >
           {index + 1}
         </div>

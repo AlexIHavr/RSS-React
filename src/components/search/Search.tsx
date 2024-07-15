@@ -22,54 +22,47 @@ export const Search: FC = () => {
 
   const currentPage = getCurrentPage(searchParams.get(SearchParams.PAGE));
 
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(currentPage);
   const [count, setCount] = useState(0);
   const [results, setResults] = useState<ApiResults>([]);
   const [details, setDetails] = useState<ApiResult | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const onSearchHandler = useCallback(
-    async (currentPage: number, savedValue?: string | null): Promise<void> => {
-      const current = inputRef.current;
+  const onSearchHandler = useCallback(async (): Promise<void> => {
+    setIsLoading(true);
 
-      if (!current) return;
+    const current = inputRef.current;
 
-      const value = savedValue ?? current.value.trim();
+    if (!current) return;
 
-      setIsLoading(true);
+    try {
+      const { count, results } = await getApiData(searchValue, page);
 
-      try {
-        const { count, results } = await getApiData(value, currentPage);
+      if (count && results) {
+        setResults(results);
+        setCount(count);
 
-        if (count && results) {
-          setResults(results);
-          setCount(count);
-          setSearchValue(value);
-
-          current.value = value;
-        } else {
-          setResults([]);
-        }
-      } finally {
-        setIsLoading(false);
+        current.value = searchValue;
+      } else {
+        setResults([]);
       }
-    },
-    [setSearchValue],
-  );
+    } finally {
+      setIsLoading(false);
+    }
+  }, [searchValue, page]);
 
-  const setPageHandler = useCallback(
+  const onSetPageHandler = useCallback(
     (pageNumber: number): void => {
       setPage(pageNumber);
       setSearchParams((prevParams) => {
         prevParams.set(SearchParams.PAGE, String(pageNumber));
         return prevParams;
       });
-      onSearchHandler(pageNumber);
     },
-    [onSearchHandler, setSearchParams],
+    [setSearchParams],
   );
 
-  const closeDetailsHandler = (): void => {
+  const onCloseDetailsHandler = (): void => {
     setDetails(null);
     setSearchParams((prevParams) => {
       prevParams.set(SearchParams.DETAILS, '');
@@ -77,29 +70,36 @@ export const Search: FC = () => {
     });
   };
 
+  const onSetSearchValueHandler = useCallback((): void => {
+    const current = inputRef.current;
+
+    if (!current) return;
+
+    const value = current.value.trim();
+    setSearchValue(value);
+    onSetPageHandler(1);
+  }, [setSearchValue, onSetPageHandler]);
+
   useEffect(() => {
-    if (currentPage !== page) {
-      setPage(currentPage);
-      onSearchHandler(currentPage, searchValue);
-    }
-  }, [currentPage, page, searchValue, onSearchHandler]);
+    onSearchHandler();
+  }, [onSearchHandler]);
 
   return (
     <div className={styles.pages}>
       <div className={styles.wrapper}>
-        <Header ref={inputRef} page={page} onSearchHandler={onSearchHandler} />
+        <Header ref={inputRef} onSetSearchValueHandler={onSetSearchValueHandler} />
         <main className={styles.main}>
           {results.length ? (
             <>
               <Results results={results} setDetails={setDetails} setIsLoading={setIsLoading} />
-              <Pagination count={count} page={page} setPageHandler={setPageHandler} />
+              <Pagination count={count} page={page} onSetPageHandler={onSetPageHandler} />
             </>
           ) : (
             <h3>No results</h3>
           )}
         </main>
       </div>
-      {details && <Details details={details} closeDetailsHandler={closeDetailsHandler} />}
+      {details && <Details details={details} onCloseDetailsHandler={onCloseDetailsHandler} />}
       {isLoading && <Loader />}
     </div>
   );

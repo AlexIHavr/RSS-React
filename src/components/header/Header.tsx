@@ -4,7 +4,7 @@ import { HeaderProps } from './header.interfaces';
 import styles from './header.module.scss';
 
 export const Header = memo(
-  forwardRef<HTMLInputElement, HeaderProps>(({ page, onSearchHandler }, ref) => {
+  forwardRef<HTMLInputElement, HeaderProps>(({ onSetSearchValueHandler }, ref) => {
     const [isError, setIsError] = useState<boolean>(false);
 
     if (isError) throw new Error('crash app');
@@ -16,13 +16,13 @@ export const Header = memo(
     const onEnterHandler = (event: KeyboardEvent<HTMLInputElement>): void => {
       if (event.key !== 'Enter') return;
 
-      onSearchHandler(page);
+      onSetSearchValueHandler();
     };
 
     return (
       <header className={styles.header}>
         <input ref={ref} type="text" placeholder="Type text..." onKeyUp={onEnterHandler} />
-        <button className={styles.searchButton} onClick={() => onSearchHandler(page)}>
+        <button className={styles.searchButton} onClick={onSetSearchValueHandler}>
           Search
         </button>
         <button className={styles.crashButton} onClick={onCrashAppHandler}>

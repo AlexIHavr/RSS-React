@@ -3,7 +3,7 @@ import { FC, memo } from 'react';
 import { DetailsProps } from './details.interfaces';
 import styles from './details.module.scss';
 
-export const Details: FC<DetailsProps> = memo(({ details, closeDetailsHandler }) => {
+export const Details: FC<DetailsProps> = memo(({ details, onCloseDetailsHandler }) => {
   return (
     <div className={styles.details}>
       <h2>Details:</h2>
@@ -13,7 +13,7 @@ export const Details: FC<DetailsProps> = memo(({ details, closeDetailsHandler })
       <span>Eye color: {details.eye_color}</span>
       <span>Hair color: {details.hair_color}</span>
       <span>Skin color: {details.skin_color}</span>
-      <button onClick={closeDetailsHandler}>Close</button>
+      <button onClick={onCloseDetailsHandler}>Close</button>
     </div>
   );
 });
