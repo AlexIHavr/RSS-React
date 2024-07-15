@@ -6,21 +6,3 @@
 
   text-align: justify;
 }
-
-.title {
-  cursor: pointer;
-  text-align: center;
-
-  &:hover {
-    text-decoration: underline;
-  }
-}
-
-.description {
-  text-indent: 20px;
-
-  &::first-letter {
-    font-size: 1.3em;
-    font-size: bold;
-  }
-}

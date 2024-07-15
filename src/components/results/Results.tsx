@@ -1,5 +1,6 @@
 import { SearchParams } from 'api/api.consts';
 import { getApiItem } from 'api/api.helpers';
+import { Result } from 'components/result/Result';
 import { FC, memo, useCallback, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
@@ -26,12 +27,15 @@ export const Results: FC<ResultsProps> = memo(({ results, setDetails, setIsLoadi
     [results.length, setDetails, setIsLoading],
   );
 
-  const setSearchDetailsHandler = (name: string): void => {
-    setSearchParams((prevParams) => {
-      prevParams.set(SearchParams.DETAILS, name);
-      return prevParams;
-    });
-  };
+  const setSearchDetailsHandler = useCallback(
+    (name: string): void => {
+      setSearchParams((prevParams) => {
+        prevParams.set(SearchParams.DETAILS, name);
+        return prevParams;
+      });
+    },
+    [setSearchParams],
+  );
 
   useEffect(() => {
     if (currentDetails) setDetailsHandler(currentDetails);
@@ -39,13 +43,13 @@ export const Results: FC<ResultsProps> = memo(({ results, setDetails, setIsLoadi
 
   return (
     <div className={styles.results}>
-      {results.map(({ name }) => (
-        <div key={name}>
-          <h3 className={styles.title} onClick={() => setSearchDetailsHandler(name)}>
-            {name}
-          </h3>
-        </div>
-      ))}
+      {results.length ? (
+        results.map(({ name }) => (
+          <Result key={name} name={name} setSearchDetailsHandler={setSearchDetailsHandler} />
+        ))
+      ) : (
+        <h3 data-testid="no-results">No results</h3>
+      )}
     </div>
   );
 });

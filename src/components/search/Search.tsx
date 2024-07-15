@@ -38,11 +38,11 @@ export const Search: FC = () => {
     try {
       const { count, results } = await getApiData(searchValue, page);
 
+      current.value = searchValue;
+
       if (count && results) {
         setResults(results);
         setCount(count);
-
-        current.value = searchValue;
       } else {
         setResults([]);
       }
@@ -89,13 +89,9 @@ export const Search: FC = () => {
       <div className={styles.wrapper}>
         <Header ref={inputRef} onSetSearchValueHandler={onSetSearchValueHandler} />
         <main className={styles.main}>
-          {results.length ? (
-            <>
-              <Results results={results} setDetails={setDetails} setIsLoading={setIsLoading} />
-              <Pagination count={count} page={page} onSetPageHandler={onSetPageHandler} />
-            </>
-          ) : (
-            <h3>No results</h3>
+          <Results results={results} setDetails={setDetails} setIsLoading={setIsLoading} />
+          {!!results.length && (
+            <Pagination count={count} page={page} onSetPageHandler={onSetPageHandler} />
           )}
         </main>
       </div>

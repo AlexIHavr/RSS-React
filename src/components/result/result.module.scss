@@ -1,0 +1,8 @@
+.title {
+  cursor: pointer;
+  text-align: center;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
