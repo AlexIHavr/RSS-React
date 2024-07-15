@@ -2,10 +2,13 @@ import { SearchParams } from 'api/api.consts';
 import { getApiData } from 'api/api.helpers';
 import { ApiResult } from 'api/api.interfaces';
 import { ApiResults } from 'api/api.types';
+import { Details } from 'components/details/Details';
+import { Header } from 'components/header/Header';
 import { Loader } from 'components/loader/Loader';
+import { Pagination } from 'components/pagination/Pagination';
 import { Results } from 'components/results/Results';
 import { getCurrentPage } from 'helpers/getCurrentPage';
-import { FC, KeyboardEvent, useCallback, useEffect, useRef, useState } from 'react';
+import { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { LocalStorageService } from 'services/localStorage.service';
 
@@ -23,9 +26,6 @@ export const Search: FC = () => {
   const [results, setResults] = useState<ApiResults>([]);
   const [details, setDetails] = useState<ApiResult | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isError, setIsError] = useState<boolean>(false);
-
-  if (isError) throw new Error('crash app');
 
   const onSearchHandler = useCallback(
     async (currentPage: number, savedValue?: string | null): Promise<void> => {
@@ -57,16 +57,6 @@ export const Search: FC = () => {
     [],
   );
 
-  const onEnterHandler = (event: KeyboardEvent<HTMLInputElement>): void => {
-    if (event.key !== 'Enter') return;
-
-    onSearchHandler(page);
-  };
-
-  const onCrashAppHandler = (): void => {
-    setIsError(true);
-  };
-
   const setPageHandler = useCallback(
     (pageNumber: number): void => {
       setPage(pageNumber);
@@ -97,36 +87,19 @@ export const Search: FC = () => {
   return (
     <div className={styles.pages}>
       <div className={styles.wrapper}>
-        <header className={styles.header}>
-          <input ref={inputRef} type="text" placeholder="Type text..." onKeyUp={onEnterHandler} />
-          <button className={styles.searchButton} onClick={() => onSearchHandler(page)}>
-            Search
-          </button>
-          <button className={styles.crashButton} onClick={onCrashAppHandler}>
-            Crash app
-          </button>
-        </header>
-        <Results
-          results={results}
-          count={count}
-          page={page}
-          setPageHandler={setPageHandler}
-          setDetails={setDetails}
-          setIsLoading={setIsLoading}
-        />
+        <Header ref={inputRef} page={page} onSearchHandler={onSearchHandler} />
+        <main className={styles.main}>
+          {results.length ? (
+            <>
+              <Results results={results} setDetails={setDetails} setIsLoading={setIsLoading} />
+              <Pagination count={count} page={page} setPageHandler={setPageHandler} />
+            </>
+          ) : (
+            <h3>No results</h3>
+          )}
+        </main>
       </div>
-      {details && (
-        <div className={styles.details}>
-          <h2>Details:</h2>
-          <span>Name: {details.name}</span>
-          <span>Mass: {details.mass}</span>
-          <span>Height: {details.height}</span>
-          <span>Eye color: {details.eye_color}</span>
-          <span>Hair color: {details.hair_color}</span>
-          <span>Skin color: {details.skin_color}</span>
-          <button onClick={closeDetailsHandler}>Close</button>
-        </div>
-      )}
+      {details && <Details details={details} closeDetailsHandler={closeDetailsHandler} />}
       {isLoading && <Loader />}
     </div>
   );

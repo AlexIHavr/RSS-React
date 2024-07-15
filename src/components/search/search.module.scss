@@ -14,31 +14,13 @@
   padding: 20px;
 }
 
-.details {
+.main {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
   align-items: center;
+  justify-content: space-between;
 
-  width: 40%;
-  padding-top: 105px;
-
-  font-weight: bold;
-  text-align: center;
-
-  border-left: 1px solid black;
-}
-
-.header {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-}
-
-.searchButton {
-  background-color: limegreen;
-}
-
-.crashButton {
-  background-color: crimson;
+  height: 100%;
+  padding: 20px;
 }
