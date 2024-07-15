@@ -48,7 +48,7 @@ export const Search: FC = () => {
 
           current.value = value;
         } else {
-          setPage(1);
+          setResults([]);
         }
       } finally {
         setIsLoading(false);

@@ -1,14 +1,12 @@
-import { PureComponent, ReactNode } from 'react';
 import { ErrorBoundary } from 'components/errorBoundary/ErrorBoundary';
+import { FC } from 'react';
 
 import { Search } from './components/search/Search';
 
-export class App extends PureComponent {
-  render(): ReactNode {
-    return (
-      <ErrorBoundary>
-        <Search />
-      </ErrorBoundary>
-    );
-  }
-}
+export const App: FC = () => {
+  return (
+    <ErrorBoundary>
+      <Search />
+    </ErrorBoundary>
+  );
+};
