@@ -8,15 +8,16 @@ import { Loader } from 'components/loader/Loader';
 import { Pagination } from 'components/pagination/Pagination';
 import { Results } from 'components/results/Results';
 import { getCurrentPage } from 'helpers/getCurrentPage';
+import { useSearchValue } from 'hooks/useSearchValue';
 import { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { LocalStorageService } from 'services/localStorage.service';
 
 import styles from './search.module.scss';
 
 export const Search: FC = () => {
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const [searchValue, setSearchValue] = useSearchValue();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const currentPage = getCurrentPage(searchParams.get(SearchParams.PAGE));
@@ -43,8 +44,7 @@ export const Search: FC = () => {
         if (count && results) {
           setResults(results);
           setCount(count);
-
-          LocalStorageService.saveData('searchValue', value);
+          setSearchValue(value);
 
           current.value = value;
         } else {
@@ -54,7 +54,7 @@ export const Search: FC = () => {
         setIsLoading(false);
       }
     },
-    [],
+    [setSearchValue],
   );
 
   const setPageHandler = useCallback(
@@ -80,9 +80,9 @@ export const Search: FC = () => {
   useEffect(() => {
     if (currentPage !== page) {
       setPage(currentPage);
-      onSearchHandler(currentPage, LocalStorageService.getData('searchValue') ?? '');
+      onSearchHandler(currentPage, searchValue);
     }
-  }, [currentPage, page, onSearchHandler]);
+  }, [currentPage, page, searchValue, onSearchHandler]);
 
   return (
     <div className={styles.pages}>
