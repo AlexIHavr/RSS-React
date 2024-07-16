@@ -7,7 +7,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 import 'styles/styles.scss';
 
-const router = createBrowserRouter([
+export const router = createBrowserRouter([
   {
     path: import.meta.env.BASE_URL,
     element: <App />,

@@ -35,7 +35,7 @@ export const Details: FC = memo(() => {
 
   return (
     details && (
-      <div className={styles.details}>
+      <div className={styles.details} data-testid="details">
         <h2>Details:</h2>
         <span>Name: {details.name}</span>
         <span>Mass: {details.mass}</span>
