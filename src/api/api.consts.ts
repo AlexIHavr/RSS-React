@@ -1,6 +1,9 @@
 export const RESULTS_COUNT_ON_PAGE = 10;
 
-export enum SearchParams {
+export const enum SearchParams {
   PAGE = 'page',
-  DETAILS = 'details',
+}
+
+export const enum Params {
+  NAME = 'name',
 }

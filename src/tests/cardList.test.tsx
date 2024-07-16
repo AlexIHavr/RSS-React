@@ -9,7 +9,7 @@ describe('Tests for card list', () => {
   test('renders the specified number of cards', () => {
     render(
       <BrowserRouter>
-        <Results results={CARD_LIST.results} setDetails={() => null} setIsLoading={() => null} />,
+        <Results results={CARD_LIST.results} />,
       </BrowserRouter>,
     );
 
@@ -26,7 +26,7 @@ describe('Tests for card list', () => {
   test('message is displayed if no cards are present', () => {
     render(
       <BrowserRouter>
-        <Results results={[]} setDetails={() => null} setIsLoading={() => null} />,
+        <Results results={[]} />,
       </BrowserRouter>,
     );
 
