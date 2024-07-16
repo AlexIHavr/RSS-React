@@ -2,13 +2,15 @@ import { Params } from 'api/api.consts';
 import { getApiItem } from 'api/api.helpers';
 import { ApiResult } from 'api/api.interfaces';
 import { Loader } from 'components/loader/Loader';
+import { useSearchParamsString } from 'hooks/useSearchParamsString';
 import { FC, memo, useCallback, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import styles from './details.module.scss';
 
 export const Details: FC = memo(() => {
   const { name } = useParams<Params>();
+  const searchParamsString = useSearchParamsString();
 
   const [details, setDetails] = useState<ApiResult | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -41,7 +43,9 @@ export const Details: FC = memo(() => {
         <span>Eye color: {details.eye_color}</span>
         <span>Hair color: {details.hair_color}</span>
         <span>Skin color: {details.skin_color}</span>
-        <button onClick={() => setDetails(null)}>Close</button>
+        <Link to={searchParamsString}>
+          <button>Close</button>
+        </Link>
         {isLoading && <Loader />}
       </div>
     )
