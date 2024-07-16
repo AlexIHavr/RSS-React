@@ -9,7 +9,7 @@ import { Pagination } from 'components/pagination/Pagination';
 import { Results } from 'components/results/Results';
 import { getCurrentPage } from 'helpers/getCurrentPage';
 import { useSearchValue } from 'hooks/useSearchValue';
-import { FC, useCallback, useEffect, useRef, useState } from 'react';
+import { FC, MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import styles from './search.module.scss';
@@ -62,13 +62,13 @@ export const Search: FC = () => {
     [setSearchParams],
   );
 
-  const onCloseDetailsHandler = (): void => {
+  const onCloseDetailsHandler = useCallback((): void => {
     setDetails(null);
     setSearchParams((prevParams) => {
       prevParams.set(SearchParams.DETAILS, '');
       return prevParams;
     });
-  };
+  }, [setSearchParams]);
 
   const onSetSearchValueHandler = useCallback((): void => {
     const current = inputRef.current;
@@ -80,13 +80,21 @@ export const Search: FC = () => {
     onSetPageHandler(1);
   }, [setSearchValue, onSetPageHandler]);
 
+  const onCloseDetailsInWrapperHandler = (event: MouseEvent<HTMLDivElement>): void => {
+    const target = event.target as HTMLElement;
+
+    if (results.find(({ name }) => target.textContent === name)) return;
+
+    onCloseDetailsHandler();
+  };
+
   useEffect(() => {
     onSearchHandler();
   }, [onSearchHandler]);
 
   return (
     <div className={styles.pages}>
-      <div className={styles.wrapper}>
+      <div className={styles.wrapper} onClick={onCloseDetailsInWrapperHandler}>
         <Header ref={inputRef} onSetSearchValueHandler={onSetSearchValueHandler} />
         <main className={styles.main}>
           <Results results={results} setDetails={setDetails} setIsLoading={setIsLoading} />
