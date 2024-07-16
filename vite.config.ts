@@ -4,7 +4,7 @@ import checker from 'vite-plugin-checker';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
-  base: '/alexihavr-REACT2024Q3/hooks-and-routing/',
+  base: '/alexihavr-REACT2024Q3/app-state-management/',
   plugins: [
     tsconfigPaths(),
     checker({
