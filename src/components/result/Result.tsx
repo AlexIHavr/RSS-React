@@ -29,7 +29,7 @@ export const Result: FC<ResultProps> = memo(({ name }) => {
       <input
         className={styles.checkbox}
         type="checkbox"
-        onClick={toggleCheckbox}
+        onChange={toggleCheckbox}
         checked={!!isSelectedName}
       />
       <NavLink to={searchParamsString} data-testid="result" className={styles.title}>

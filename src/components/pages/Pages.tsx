@@ -94,7 +94,7 @@ export const Pages: FC = () => {
           {!!results.length && (
             <Pagination count={count} page={page} onSetPageHandler={onSetPageHandler} />
           )}
-          <Footer />
+          <Footer results={results} />
         </main>
         {isLoading && <Loader />}
       </div>
