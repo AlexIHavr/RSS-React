@@ -1,6 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { Result } from 'components/result/Result';
+import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
+import { store } from 'redux/store';
 import { describe, expect, test } from 'vitest';
 
 import { CARD_LIST } from './mockData';
@@ -10,9 +12,11 @@ describe('Tests for card component', () => {
 
   test('the card component renders the relevant card data', () => {
     render(
-      <BrowserRouter>
-        <Result name={name} />,
-      </BrowserRouter>,
+      <Provider store={store}>
+        <BrowserRouter>
+          <Result name={name} />,
+        </BrowserRouter>
+      </Provider>,
     );
 
     const result = screen.getByTestId('result');
