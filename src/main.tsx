@@ -3,7 +3,9 @@ import { Params } from 'api/api.consts';
 import { Details } from 'components/details/Details';
 import { NotFound } from 'components/notFound/NotFound';
 import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { store } from 'redux/store';
 
 import 'styles/styles.scss';
 
@@ -24,4 +26,8 @@ export const router = createBrowserRouter([
   },
 ]);
 
-ReactDOM.createRoot(document.getElementById('root')!).render(<RouterProvider router={router} />);
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <Provider store={store}>
+    <RouterProvider router={router} />
+  </Provider>,
+);

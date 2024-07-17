@@ -9,7 +9,8 @@ export const Result: FC<ResultProps> = memo(({ name }) => {
   const searchParamsString = useSearchParamsString(name);
 
   return (
-    <div>
+    <div className={styles.result}>
+      <input className={styles.checkbox} type="checkbox" />
       <NavLink to={searchParamsString} data-testid="result" className={styles.title}>
         {name}
       </NavLink>

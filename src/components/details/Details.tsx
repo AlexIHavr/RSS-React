@@ -34,20 +34,22 @@ export const Details: FC = memo(() => {
   }, [setDetailsHandler]);
 
   return (
-    details && (
-      <div className={styles.details} data-testid="details">
-        <h2>Details:</h2>
-        <span>Name: {details.name}</span>
-        <span>Mass: {details.mass}</span>
-        <span>Height: {details.height}</span>
-        <span>Eye color: {details.eye_color}</span>
-        <span>Hair color: {details.hair_color}</span>
-        <span>Skin color: {details.skin_color}</span>
-        <Link to={searchParamsString}>
-          <button>Close</button>
-        </Link>
-        {isLoading && <Loader />}
-      </div>
-    )
+    <div className={styles.details} data-testid="details">
+      {details && (
+        <>
+          <h2>Details:</h2>
+          <span>Name: {details.name}</span>
+          <span>Mass: {details.mass}</span>
+          <span>Height: {details.height}</span>
+          <span>Eye color: {details.eye_color}</span>
+          <span>Hair color: {details.hair_color}</span>
+          <span>Skin color: {details.skin_color}</span>
+          <Link to={searchParamsString}>
+            <button>Close</button>
+          </Link>
+        </>
+      )}
+      {isLoading && <Loader />}
+    </div>
   );
 });
