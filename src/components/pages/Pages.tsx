@@ -1,6 +1,7 @@
 import { SearchParams } from 'api/api.consts';
 import { getApiData } from 'api/api.helpers';
 import { ApiResults } from 'api/api.types';
+import { Footer } from 'components/footer/Footer';
 import { Header } from 'components/header/Header';
 import { Loader } from 'components/loader/Loader';
 import { Pagination } from 'components/pagination/Pagination';
@@ -93,6 +94,7 @@ export const Pages: FC = () => {
           {!!results.length && (
             <Pagination count={count} page={page} onSetPageHandler={onSetPageHandler} />
           )}
+          <Footer />
         </main>
         {isLoading && <Loader />}
       </div>
