@@ -5,24 +5,29 @@
 }
 
 .page {
-  cursor: pointer;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 40px;
+  min-width: 40px;
   height: 40px;
+  padding: 0;
 
-  border-radius: 5px;
+  color: black;
+
+  background-color: white;
   box-shadow: 0 0 5px black;
 
-  transition:
-    color 0.2s,
-    background-color 0.2s;
+  &.darkBtn {
+    color: white;
+    background-color: black;
+    box-shadow: 0 0 5px white;
+  }
 
   &.active {
     color: white;
     background-color: black;
+    box-shadow: none;
+
+    &.darkBtn {
+      color: black;
+      background-color: white;
+    }
   }
 }

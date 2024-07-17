@@ -1,5 +1,12 @@
 .header {
   display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+}
+
+.headerButtons {
+  display: flex;
   gap: 10px;
   justify-content: center;
 }

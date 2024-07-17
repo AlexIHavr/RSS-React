@@ -9,8 +9,10 @@ import { Results } from 'components/results/Results';
 import { getCurrentPage } from 'helpers/getCurrentPage';
 import { useSearchParamsString } from 'hooks/useSearchParamsString';
 import { useSearchValue } from 'hooks/useSearchValue';
+import { useThemeContext } from 'hooks/useThemeContext';
 import { FC, MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
+import { Theme } from 'utils/context';
 
 import styles from './pages.module.scss';
 
@@ -21,6 +23,7 @@ export const Pages: FC = () => {
   const [searchValue, setSearchValue] = useSearchValue();
   const [searchParams, setSearchParams] = useSearchParams();
   const searchParamsString = useSearchParamsString();
+  const { theme } = useThemeContext();
 
   const currentPage = getCurrentPage(searchParams.get(SearchParams.PAGE));
 
@@ -86,7 +89,7 @@ export const Pages: FC = () => {
   }, [onSearchHandler]);
 
   return (
-    <div className={styles.pages}>
+    <div className={styles.pages + ' ' + (theme === Theme.DARK ? styles.darkTheme : '')}>
       <div className={styles.wrapper} onClick={onCloseDetailsInWrapperHandler}>
         <Header ref={inputRef} onSetSearchValueHandler={onSetSearchValueHandler} />
         <main className={styles.main}>
