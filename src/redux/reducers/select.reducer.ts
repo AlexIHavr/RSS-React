@@ -16,9 +16,12 @@ export const selectSlice = createSlice({
     remove: (state, action: PayloadAction<string>) => {
       state.selectedNames = state.selectedNames.filter((name) => name !== action.payload);
     },
+    removeAll: (state) => {
+      state.selectedNames = [];
+    },
   },
 });
 
-export const { add, remove } = selectSlice.actions;
+export const { add, remove, removeAll } = selectSlice.actions;
 
 export const selectReducer = selectSlice.reducer;
