@@ -1,21 +1,20 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { ApiResult } from 'api/api.interfaces';
 
 import { SelectState } from './select.interfaces';
 
 const initialState: SelectState = {
-  selectedResults: [],
+  selectedNames: [],
 };
 
 export const selectSlice = createSlice({
   name: 'select',
   initialState,
   reducers: {
-    add: (state, action: PayloadAction<ApiResult>) => {
-      state.selectedResults.push(action.payload);
+    add: (state, action: PayloadAction<string>) => {
+      state.selectedNames.push(action.payload);
     },
     remove: (state, action: PayloadAction<string>) => {
-      state.selectedResults = state.selectedResults.filter(({ name }) => name !== action.payload);
+      state.selectedNames = state.selectedNames.filter((name) => name !== action.payload);
     },
   },
 });
