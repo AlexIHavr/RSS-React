@@ -5,12 +5,15 @@ import { Loader } from 'components/loader/Loader';
 import { Pagination } from 'components/pagination/Pagination';
 import { Results } from 'components/results/Results';
 import { getCurrentPage } from 'helpers/getCurrentPage';
+import { useAppDispatch } from 'hooks/useAppDispatch';
+import { useAppSelector } from 'hooks/useAppSelector';
 import { useSearchParamsString } from 'hooks/useSearchParamsString';
 import { useSearchValue } from 'hooks/useSearchValue';
 import { useThemeContext } from 'hooks/useThemeContext';
-import { FC, MouseEvent, useCallback, useRef, useState } from 'react';
+import { FC, MouseEvent, useCallback, useRef } from 'react';
 import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
 import { api } from 'redux/api/api';
+import { set } from 'redux/reducers/page/page.reducer';
 import { Theme } from 'utils/context';
 
 import styles from './pages.module.scss';
@@ -26,7 +29,8 @@ export const Pages: FC = () => {
 
   const currentPage = getCurrentPage(searchParams.get(SearchParams.PAGE));
 
-  const [page, setPage] = useState(currentPage);
+  const page = useAppSelector((state) => state.page.currentPage) ?? currentPage;
+  const dispatch = useAppDispatch();
 
   const { data, isFetching } = api.useGetPeopleQuery({ searchValue, page });
 
@@ -36,13 +40,13 @@ export const Pages: FC = () => {
 
   const onSetPageHandler = useCallback(
     (pageNumber: number): void => {
-      setPage(pageNumber);
+      dispatch(set(pageNumber));
       setSearchParams((prevParams) => {
         prevParams.set(SearchParams.PAGE, String(pageNumber));
         return prevParams;
       });
     },
-    [setSearchParams],
+    [dispatch, setSearchParams],
   );
 
   const onSetSearchValueHandler = useCallback((): void => {
@@ -70,7 +74,7 @@ export const Pages: FC = () => {
         <main className={styles.main}>
           {results && <Results results={results} />}
           {data?.count && results?.length && (
-            <Pagination count={data.count} page={page} onSetPageHandler={onSetPageHandler} />
+            <Pagination page={page} count={data.count} onSetPageHandler={onSetPageHandler} />
           )}
           {results && <Footer results={results} />}
         </main>

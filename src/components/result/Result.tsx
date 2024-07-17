@@ -3,7 +3,7 @@ import { useAppSelector } from 'hooks/useAppSelector';
 import { useSearchParamsString } from 'hooks/useSearchParamsString';
 import { FC, memo } from 'react';
 import { NavLink } from 'react-router-dom';
-import { add, remove } from 'redux/reducers/select.reducer';
+import { add, remove } from 'redux/reducers/select/select.reducer';
 
 import { ResultProps } from './result.interfaces';
 import styles from './result.module.scss';
