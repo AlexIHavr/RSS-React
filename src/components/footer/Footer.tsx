@@ -12,7 +12,7 @@ export const Footer: FC<FooterProps> = ({ results }) => {
   const selectedNames = useAppSelector((state) => state.select.selectedNames);
   const dispatch = useAppDispatch();
 
-  const csvData = results.filter(({ name }) => selectedNames.includes(name));
+  const csvData = results?.filter(({ name }) => selectedNames.includes(name)) || [];
 
   return (
     !!selectedNames.length && (

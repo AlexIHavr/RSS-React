@@ -1,6 +1,4 @@
 import { SearchParams } from 'api/api.consts';
-import { getApiData } from 'api/api.helpers';
-import { ApiResults } from 'api/api.types';
 import { Footer } from 'components/footer/Footer';
 import { Header } from 'components/header/Header';
 import { Loader } from 'components/loader/Loader';
@@ -10,8 +8,9 @@ import { getCurrentPage } from 'helpers/getCurrentPage';
 import { useSearchParamsString } from 'hooks/useSearchParamsString';
 import { useSearchValue } from 'hooks/useSearchValue';
 import { useThemeContext } from 'hooks/useThemeContext';
-import { FC, MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
+import { FC, MouseEvent, useCallback, useRef, useState } from 'react';
 import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
+import { api } from 'redux/api/api';
 import { Theme } from 'utils/context';
 
 import styles from './pages.module.scss';
@@ -28,32 +27,12 @@ export const Pages: FC = () => {
   const currentPage = getCurrentPage(searchParams.get(SearchParams.PAGE));
 
   const [page, setPage] = useState(currentPage);
-  const [count, setCount] = useState(0);
-  const [results, setResults] = useState<ApiResults>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const onSearchHandler = useCallback(async (): Promise<void> => {
-    setIsLoading(true);
+  const { data, isFetching } = api.useGetPeopleQuery({ searchValue, page });
 
-    const current = inputRef.current;
+  const results = data?.results;
 
-    if (!current) return;
-
-    try {
-      const { count, results } = await getApiData(searchValue, page);
-
-      current.value = searchValue;
-
-      if (count && results) {
-        setResults(results);
-        setCount(count);
-      } else {
-        setResults([]);
-      }
-    } finally {
-      setIsLoading(false);
-    }
-  }, [searchValue, page]);
+  if (inputRef.current) inputRef.current.value = searchValue;
 
   const onSetPageHandler = useCallback(
     (pageNumber: number): void => {
@@ -84,22 +63,18 @@ export const Pages: FC = () => {
     }
   };
 
-  useEffect(() => {
-    onSearchHandler();
-  }, [onSearchHandler]);
-
   return (
     <div className={styles.pages + ' ' + (theme === Theme.DARK ? styles.darkTheme : '')}>
       <div className={styles.wrapper} onClick={onCloseDetailsInWrapperHandler}>
         <Header ref={inputRef} onSetSearchValueHandler={onSetSearchValueHandler} />
         <main className={styles.main}>
-          <Results results={results} />
-          {!!results.length && (
-            <Pagination count={count} page={page} onSetPageHandler={onSetPageHandler} />
+          {results && <Results results={results} />}
+          {data?.count && results?.length && (
+            <Pagination count={data.count} page={page} onSetPageHandler={onSetPageHandler} />
           )}
-          <Footer results={results} />
+          {results && <Footer results={results} />}
         </main>
-        {isLoading && <Loader />}
+        {isFetching && <Loader />}
       </div>
       <Outlet />
     </div>

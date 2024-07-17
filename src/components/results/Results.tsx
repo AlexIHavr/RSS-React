@@ -7,7 +7,7 @@ import styles from './results.module.scss';
 export const Results: FC<ResultsProps> = memo(({ results }) => {
   return (
     <div className={styles.results}>
-      {results.length ? (
+      {results?.length ? (
         results.map(({ name }) => <Result key={name} name={name} />)
       ) : (
         <h3 data-testid="no-results">No results</h3>
