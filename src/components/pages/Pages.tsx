@@ -11,9 +11,9 @@ import { useSearchValue } from 'hooks/useSearchValue';
 import { FC, MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
 
-import styles from './search.module.scss';
+import styles from './pages.module.scss';
 
-export const Search: FC = () => {
+export const Pages: FC = () => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const navigate = useNavigate();
