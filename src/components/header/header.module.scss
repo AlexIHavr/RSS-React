@@ -1,0 +1,21 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.headerButtons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.searchButton {
+  background-color: limegreen;
+}
+
+.crashButton {
+  background-color: crimson;
+}
