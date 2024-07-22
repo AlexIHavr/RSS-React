@@ -53,8 +53,6 @@ describe('Tests for details card', () => {
 
     fireEvent.click(cardLink);
 
-    screen.debug();
-
     const closeLink = screen.getByTestId('close');
 
     fireEvent.click(closeLink);

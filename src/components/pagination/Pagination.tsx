@@ -17,7 +17,7 @@ export const Pagination: FC<PaginationProps> = memo(({ page, count, onSetPageHan
   };
 
   return (
-    <div className={styles.pagination}>
+    <div className={styles.pagination} data-testid="pagination">
       {pages.map((_, index) => (
         <button
           key={index}
