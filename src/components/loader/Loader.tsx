@@ -8,7 +8,7 @@ export const Loader: FC = () => {
   const { theme } = useThemeContext();
 
   return (
-    <div className={styles.loaderWrapper}>
+    <div className={styles.loaderWrapper} data-testid="loader">
       <div className={styles.loader + ' ' + (theme === Theme.DARK ? styles.darkLoader : '')}></div>
     </div>
   );

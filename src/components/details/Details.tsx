@@ -17,23 +17,22 @@ export const Details: FC = memo(() => {
 
   return (
     <div className={styles.details} data-testid="details">
-      {!isFetching &&
-        (details ? (
-          <>
-            <h2>Details:</h2>
-            <span>Name: {details.name}</span>
-            <span>Mass: {details.mass}</span>
-            <span>Height: {details.height}</span>
-            <span>Eye color: {details.eye_color}</span>
-            <span>Hair color: {details.hair_color}</span>
-            <span>Skin color: {details.skin_color}</span>
-            <Link to={searchParamsString}>
-              <button>Close</button>
-            </Link>
-          </>
-        ) : (
-          <h3>No data</h3>
-        ))}
+      {details ? (
+        <>
+          <h2>Details:</h2>
+          <span>Name: {details.name}</span>
+          <span>Mass: {details.mass}</span>
+          <span>Height: {details.height}</span>
+          <span>Eye color: {details.eye_color}</span>
+          <span>Hair color: {details.hair_color}</span>
+          <span>Skin color: {details.skin_color}</span>
+          <Link to={searchParamsString} data-testid="close">
+            <button>Close</button>
+          </Link>
+        </>
+      ) : (
+        <h3>No data</h3>
+      )}
       {isFetching && <Loader />}
     </div>
   );
