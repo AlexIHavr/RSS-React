@@ -24,9 +24,19 @@ export const Header = memo(
 
     return (
       <header className={styles.header}>
-        <input ref={ref} type="text" placeholder="Type text..." onKeyUp={onEnterHandler} />
+        <input
+          ref={ref}
+          type="text"
+          placeholder="Type text..."
+          onKeyUp={onEnterHandler}
+          data-testid="search-input"
+        />
         <div className={styles.headerButtons}>
-          <button className={styles.searchButton} onClick={onSetSearchValueHandler}>
+          <button
+            className={styles.searchButton}
+            onClick={onSetSearchValueHandler}
+            data-testid="search"
+          >
             Search
           </button>
           <button className={styles.crashButton} onClick={onCrashAppHandler}>

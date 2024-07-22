@@ -6,7 +6,7 @@ import { store } from 'redux/store';
 import { router } from 'utils/router';
 import { describe, expect, test } from 'vitest';
 
-describe('Tests for pagination', () => {
+describe('Tests for pagination component', () => {
   test('the component updates URL query parameter when page changes', () => {
     render(
       <Provider store={store}>
@@ -18,8 +18,6 @@ describe('Tests for pagination', () => {
     const [prevButton, nextButton] = pagination.children;
 
     fireEvent.click(nextButton);
-
-    screen.debug();
 
     expect(global.window.location.href).toContain(`${SearchParams.PAGE}=2`);
 
