@@ -1,6 +1,4 @@
-import { ApiData } from 'api/api.interfaces';
-
-export const CARD_LIST: Required<ApiData> = {
+export const CARD_LIST = {
   count: 3,
   next: null,
   previous: null,
@@ -31,6 +29,23 @@ export const CARD_LIST: Required<ApiData> = {
       skin_color: 'white, blue',
       eye_color: 'red',
       gender: 'n/a',
+    },
+  ],
+};
+
+export const CARD_ITEM = {
+  count: 1,
+  next: null,
+  previous: null,
+  results: [
+    {
+      name: 'Luke Skywalker',
+      height: '172',
+      mass: '77',
+      hair_color: 'blond',
+      skin_color: 'fair',
+      eye_color: 'blue',
+      gender: 'male',
     },
   ],
 };
