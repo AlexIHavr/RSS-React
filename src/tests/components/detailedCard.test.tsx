@@ -6,7 +6,7 @@ import { store } from 'redux/store';
 import { router } from 'utils/router';
 import { describe, expect, test } from 'vitest';
 
-import { CARD_LIST } from './mockData';
+import { CARD_LIST } from '../mockData';
 
 const result = CARD_LIST.results[0];
 

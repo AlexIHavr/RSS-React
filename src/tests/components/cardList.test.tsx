@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { store } from 'redux/store';
 import { describe, expect, test } from 'vitest';
 
-import { CARD_LIST } from './mockData';
+import { CARD_LIST } from '../mockData';
 
 describe('Tests for card list', () => {
   test('renders the specified number of cards', () => {
