@@ -4,8 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
     "test": "vitest run",
     "lint": "eslint ./src && npx stylelint ./src/**/*.scss",
     "lint:fix": "eslint --fix ./src && npx stylelint ./src/**/*.scss --fix",
@@ -16,6 +17,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.6",
+    "next": "^14.2.5",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
     "react-csv": "^2.2.2",
