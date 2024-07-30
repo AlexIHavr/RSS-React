@@ -1,8 +1,8 @@
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
 import { useSearchParamsString } from 'hooks/useSearchParamsString';
+import Link from 'next/link';
 import { FC, memo } from 'react';
-import { NavLink } from 'react-router-dom';
 import { add, remove } from 'reduxToolkit/reducers/select/select.reducer';
 
 import { ResultProps } from './result.interfaces';
@@ -32,9 +32,9 @@ export const Result: FC<ResultProps> = memo(({ name }) => {
         onChange={toggleCheckbox}
         checked={!!isSelectedName}
       />
-      <NavLink to={searchParamsString} data-testid="result" className={styles.title}>
+      <Link href={searchParamsString} data-testid="result" className={styles.title}>
         {name}
-      </NavLink>
+      </Link>
     </div>
   );
 });

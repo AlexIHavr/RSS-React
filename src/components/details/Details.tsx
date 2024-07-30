@@ -1,17 +1,17 @@
-import { Params } from 'api/api.consts';
 import { Loader } from 'components/loader/Loader';
 import { useSearchParamsString } from 'hooks/useSearchParamsString';
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import { FC, memo } from 'react';
-import { Link, useParams } from 'react-router-dom';
 import { api } from 'reduxToolkit/api/api';
 
 import styles from './details.module.scss';
 
 export const Details: FC = memo(() => {
-  const { name } = useParams<Params>();
+  const { name } = useParams();
   const searchParamsString = useSearchParamsString();
 
-  const { data, isFetching } = api.useGetPersonByNameQuery(name ?? '');
+  const { data, isFetching } = api.useGetPersonByNameQuery((name as string) ?? '');
 
   const details = data?.results?.[0];
 
@@ -26,7 +26,7 @@ export const Details: FC = memo(() => {
           <span>Eye color: {details.eye_color}</span>
           <span>Hair color: {details.hair_color}</span>
           <span>Skin color: {details.skin_color}</span>
-          <Link to={searchParamsString} data-testid="close">
+          <Link href={searchParamsString} data-testid="close">
             <button>Close</button>
           </Link>
         </>

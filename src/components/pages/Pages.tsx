@@ -1,4 +1,3 @@
-import { SearchParams } from 'api/api.consts';
 import { Footer } from 'components/footer/Footer';
 import { Header } from 'components/header/Header';
 import { Loader } from 'components/loader/Loader';
@@ -12,7 +11,6 @@ import { useSearchValue } from 'hooks/useSearchValue';
 import { useThemeContext } from 'hooks/useThemeContext';
 import { useRouter } from 'next/router';
 import { FC, MouseEvent, useCallback, useRef } from 'react';
-import { Outlet, useSearchParams } from 'react-router-dom';
 import { api } from 'reduxToolkit/api/api';
 import { set } from 'reduxToolkit/reducers/page/page.reducer';
 import { Theme } from 'utils/context';
@@ -24,11 +22,11 @@ export const Pages: FC = () => {
 
   const router = useRouter();
   const [searchValue, setSearchValue] = useSearchValue();
-  const [searchParams, setSearchParams] = useSearchParams();
+  // const [searchParams, setSearchParams] = useSearchParams();
   const searchParamsString = useSearchParamsString();
   const { theme } = useThemeContext();
 
-  const currentPage = getCurrentPage(searchParams.get(SearchParams.PAGE));
+  const currentPage = getCurrentPage(null);
 
   const page = useAppSelector((state) => state.page.currentPage) ?? currentPage;
   const dispatch = useAppDispatch();
@@ -42,12 +40,12 @@ export const Pages: FC = () => {
   const onSetPageHandler = useCallback(
     (pageNumber: number): void => {
       dispatch(set(pageNumber));
-      setSearchParams((prevParams) => {
-        prevParams.set(SearchParams.PAGE, String(pageNumber));
-        return prevParams;
-      });
+      // setSearchParams((prevParams) => {
+      //   prevParams.set(SearchParams.PAGE, String(pageNumber));
+      //   return prevParams;
+      // });
     },
-    [dispatch, setSearchParams],
+    [dispatch],
   );
 
   const onSetSearchValueHandler = useCallback((): void => {
@@ -81,7 +79,7 @@ export const Pages: FC = () => {
         </main>
         {isFetching && <Loader />}
       </div>
-      <Outlet />
+      {/* <Outlet /> */}
     </div>
   );
 };
