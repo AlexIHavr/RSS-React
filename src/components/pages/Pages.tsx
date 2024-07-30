@@ -10,10 +10,11 @@ import { useAppSelector } from 'hooks/useAppSelector';
 import { useSearchParamsString } from 'hooks/useSearchParamsString';
 import { useSearchValue } from 'hooks/useSearchValue';
 import { useThemeContext } from 'hooks/useThemeContext';
+import { useRouter } from 'next/router';
 import { FC, MouseEvent, useCallback, useRef } from 'react';
-import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
-import { api } from 'redux/api/api';
-import { set } from 'redux/reducers/page/page.reducer';
+import { Outlet, useSearchParams } from 'react-router-dom';
+import { api } from 'reduxToolkit/api/api';
+import { set } from 'reduxToolkit/reducers/page/page.reducer';
 import { Theme } from 'utils/context';
 
 import styles from './pages.module.scss';
@@ -21,7 +22,7 @@ import styles from './pages.module.scss';
 export const Pages: FC = () => {
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const navigate = useNavigate();
+  const router = useRouter();
   const [searchValue, setSearchValue] = useSearchValue();
   const [searchParams, setSearchParams] = useSearchParams();
   const searchParamsString = useSearchParamsString();
@@ -63,7 +64,7 @@ export const Pages: FC = () => {
     const target = event.target as HTMLElement;
 
     if (target.classList.contains(styles.main) || target.classList.contains(styles.wrapper)) {
-      navigate(searchParamsString);
+      router.push(searchParamsString);
     }
   };
 

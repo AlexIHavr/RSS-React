@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
-import { store } from 'redux/store';
+import { store } from 'reduxToolkit/store';
 import { LocalStorageService } from 'services/localStorage.service';
 import { CARD_LIST } from 'tests/mockData';
 import { router } from 'utils/router';

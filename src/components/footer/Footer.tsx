@@ -3,7 +3,7 @@ import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
 import { FC } from 'react';
 import { CSVLink } from 'react-csv';
-import { removeAll } from 'redux/reducers/select/select.reducer';
+import { removeAll } from 'reduxToolkit/reducers/select/select.reducer';
 
 import { FooterProps } from './footer.interfaces';
 import styles from './footer.module.scss';

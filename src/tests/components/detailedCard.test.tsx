@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { Details } from 'components/details/Details';
 import { Provider } from 'react-redux';
 import { BrowserRouter, RouterProvider } from 'react-router-dom';
-import { store } from 'redux/store';
+import { store } from 'reduxToolkit/store';
 import { router } from 'utils/router';
 import { describe, expect, test } from 'vitest';
 

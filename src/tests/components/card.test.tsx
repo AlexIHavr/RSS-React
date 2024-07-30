@@ -2,8 +2,8 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { Result } from 'components/result/Result';
 import { Provider } from 'react-redux';
 import { BrowserRouter, RouterProvider } from 'react-router-dom';
-import { api } from 'redux/api/api';
-import { store } from 'redux/store';
+import { api } from 'reduxToolkit/api/api';
+import { store } from 'reduxToolkit/store';
 import { router } from 'utils/router';
 import { describe, expect, test } from 'vitest';
 
@@ -24,7 +24,7 @@ describe('Tests for card component', () => {
     const result = screen.getByTestId('result');
 
     expect(result).toHaveTextContent(name);
-    expect(result).toHaveAttribute('href', `${import.meta.env.BASE_URL}${name}`);
+    expect(result).toHaveAttribute('href', `${process.env.NEXT_PUBLIC_BASE_PATH}${name}`);
   });
 
   test('clicking on a card opens a detailed card component and check additional API', () => {

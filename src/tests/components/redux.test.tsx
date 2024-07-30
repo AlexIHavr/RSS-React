@@ -1,6 +1,6 @@
-import { set } from 'redux/reducers/page/page.reducer';
-import { add, remove, removeAll } from 'redux/reducers/select/select.reducer';
-import { store } from 'redux/store';
+import { set } from 'reduxToolkit/reducers/page/page.reducer';
+import { add, remove, removeAll } from 'reduxToolkit/reducers/select/select.reducer';
+import { store } from 'reduxToolkit/store';
 import { describe, expect, test } from 'vitest';
 
 describe('redux reducers tests', () => {

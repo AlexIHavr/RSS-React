@@ -1,11 +1,11 @@
 import '@testing-library/jest-dom/vitest';
-import { ApiActual } from 'redux/api/api.interfaces';
+import { ApiActual } from 'reduxToolkit/api/api.interfaces';
 import { vi } from 'vitest';
 
 import { CARD_ITEM, CARD_LIST } from './mockData';
 
-vi.mock('redux/api/api', async () => {
-  const actual = (await vi.importActual('redux/api/api')) as ApiActual;
+vi.mock('reduxToolkit/api/api', async () => {
+  const actual = (await vi.importActual('reduxToolkit/api/api')) as ApiActual;
 
   actual.api.useGetPeopleQuery = vi.fn(() => ({
     data: CARD_LIST,

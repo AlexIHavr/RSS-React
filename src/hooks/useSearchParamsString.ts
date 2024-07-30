@@ -3,5 +3,5 @@ import { useSearchParams } from 'react-router-dom';
 export function useSearchParamsString(name: string = ''): string {
   const [searchParams] = useSearchParams();
 
-  return `${import.meta.env.BASE_URL}${name}?${searchParams}`;
+  return `${process.env.NEXT_PUBLIC_BASE_PATH}${name}?${searchParams}`;
 }

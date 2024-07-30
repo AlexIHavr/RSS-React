@@ -3,7 +3,7 @@ import { Loader } from 'components/loader/Loader';
 import { useSearchParamsString } from 'hooks/useSearchParamsString';
 import { FC, memo } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { api } from 'redux/api/api';
+import { api } from 'reduxToolkit/api/api';
 
 import styles from './details.module.scss';
 

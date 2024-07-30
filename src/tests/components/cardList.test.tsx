@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { Results } from 'components/results/Results';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import { store } from 'redux/store';
+import { store } from 'reduxToolkit/store';
 import { describe, expect, test } from 'vitest';
 
 import { CARD_LIST } from '../mockData';

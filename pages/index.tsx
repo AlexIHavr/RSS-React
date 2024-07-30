@@ -1,5 +1,5 @@
-import React from 'react';
+import { App } from 'App';
 
 export default function Page(): JSX.Element {
-  return <h1>Hello, Next.js!</h1>;
+  return <App />;
 }
