@@ -79,7 +79,6 @@ export const Pages: FC = () => {
         </main>
         {isFetching && <Loader />}
       </div>
-      {/* <Outlet /> */}
     </div>
   );
 };
