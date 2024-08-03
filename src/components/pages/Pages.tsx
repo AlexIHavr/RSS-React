@@ -10,14 +10,14 @@ import { useSearchParamsString } from 'hooks/useSearchParamsString';
 import { useSearchValue } from 'hooks/useSearchValue';
 import { useThemeContext } from 'hooks/useThemeContext';
 import { useRouter } from 'next/router';
-import { FC, MouseEvent, useCallback, useRef } from 'react';
+import { FC, MouseEvent, ReactNode, useCallback, useRef } from 'react';
 import { api } from 'reduxToolkit/api/api';
 import { set } from 'reduxToolkit/reducers/page/page.reducer';
 import { Theme } from 'utils/context';
 
 import styles from './pages.module.scss';
 
-export const Pages: FC = () => {
+export const Pages: FC<{ children?: ReactNode }> = ({ children }) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const router = useRouter();
@@ -79,6 +79,7 @@ export const Pages: FC = () => {
         </main>
         {isFetching && <Loader />}
       </div>
+      {children}
     </div>
   );
 };

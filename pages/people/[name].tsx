@@ -1,11 +1,10 @@
+import { App } from 'App';
 import { Details } from 'components/details/Details';
-import { Provider } from 'react-redux';
-import { store } from 'reduxToolkit/store';
 
 export default function Person(): JSX.Element {
   return (
-    <Provider store={store}>
+    <App>
       <Details />
-    </Provider>
+    </App>
   );
 }
