@@ -1,17 +1,17 @@
+'use client';
+
 import { Loader } from 'components/loader/Loader';
 import { useSearchParamsString } from 'hooks/useSearchParamsString';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { FC, memo } from 'react';
 import { api } from 'reduxToolkit/api/api';
 
 import styles from './details.module.scss';
 
-export const Details: FC = memo(() => {
-  const router = useRouter();
+export const Details: FC<{ name?: string }> = memo(({ name }) => {
   const searchParamsString = useSearchParamsString();
 
-  const { data, isFetching } = api.useGetPersonByNameQuery((router.query.name as string) ?? '');
+  const { data, isFetching } = api.useGetPersonByNameQuery(name ?? '');
 
   const details = data?.results?.[0];
 

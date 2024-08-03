@@ -6,5 +6,5 @@ export function useSearchParamsString(path: string = '/', name: string = ''): st
   const params = new URLSearchParams();
   params.set(SearchParams.PAGE, String(searchParams.get(SearchParams.PAGE) ?? 1));
 
-  return `/${path}/${name}?${params}`;
+  return `${path}/${name}?${params}`;
 }

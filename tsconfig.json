@@ -4,11 +4,17 @@
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
     "target": "ES2020",
     "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "lib": [
+      "ES2020",
+      "DOM",
+      "DOM.Iterable"
+    ],
     "module": "ESNext",
     "skipLibCheck": true,
     "baseUrl": "./src",
-    "types": ["@testing-library/jest-dom"],
+    "types": [
+      "@testing-library/jest-dom"
+    ],
     /* Bundler mode */
     "moduleResolution": "Bundler",
     "allowImportingTsExtensions": true,
@@ -25,8 +31,19 @@
     "allowJs": true,
     "incremental": true,
     "esModuleInterop": true,
-    "plugins": [{ "name": "next" }]
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "include": ["src", "pages", ".eslintrc.cjs"],
-  "exclude": ["node_modules"]
+  "include": [
+    "src",
+    "app",
+    ".eslintrc.cjs",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

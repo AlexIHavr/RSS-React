@@ -1,3 +1,5 @@
+'use client';
+
 import { ErrorBoundary } from 'components/errorBoundary/ErrorBoundary';
 import { Pages } from 'components/pages/Pages';
 import { FC, ReactNode, useState } from 'react';
