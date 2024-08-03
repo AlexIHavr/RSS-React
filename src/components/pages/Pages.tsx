@@ -1,3 +1,4 @@
+import { SearchParams } from 'api/api.consts';
 import { Footer } from 'components/footer/Footer';
 import { Header } from 'components/header/Header';
 import { Loader } from 'components/loader/Loader';
@@ -9,6 +10,7 @@ import { useAppSelector } from 'hooks/useAppSelector';
 import { useSearchParamsString } from 'hooks/useSearchParamsString';
 import { useSearchValue } from 'hooks/useSearchValue';
 import { useThemeContext } from 'hooks/useThemeContext';
+import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
 import { FC, MouseEvent, ReactNode, useCallback, useRef } from 'react';
 import { api } from 'reduxToolkit/api/api';
@@ -22,11 +24,10 @@ export const Pages: FC<{ children?: ReactNode }> = ({ children }) => {
 
   const router = useRouter();
   const [searchValue, setSearchValue] = useSearchValue();
-  // const [searchParams, setSearchParams] = useSearchParams();
   const searchParamsString = useSearchParamsString();
   const { theme } = useThemeContext();
-
-  const currentPage = getCurrentPage(null);
+  const searchParams = useSearchParams();
+  const currentPage = getCurrentPage(searchParams.get(SearchParams.PAGE));
 
   const page = useAppSelector((state) => state.page.currentPage) ?? currentPage;
   const dispatch = useAppDispatch();
@@ -40,12 +41,12 @@ export const Pages: FC<{ children?: ReactNode }> = ({ children }) => {
   const onSetPageHandler = useCallback(
     (pageNumber: number): void => {
       dispatch(set(pageNumber));
-      // setSearchParams((prevParams) => {
-      //   prevParams.set(SearchParams.PAGE, String(pageNumber));
-      //   return prevParams;
-      // });
+
+      const params = new URLSearchParams();
+      params.set(SearchParams.PAGE, String(pageNumber));
+      router.push(`/?${params}`);
     },
-    [dispatch],
+    [dispatch, router],
   );
 
   const onSetSearchValueHandler = useCallback((): void => {

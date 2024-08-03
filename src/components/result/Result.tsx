@@ -12,7 +12,7 @@ export const Result: FC<ResultProps> = memo(({ name }) => {
   const selectedNames = useAppSelector((state) => state.select.selectedNames);
   const dispatch = useAppDispatch();
 
-  const searchParamsString = useSearchParamsString(name);
+  const searchParamsString = useSearchParamsString('people', name);
 
   const isSelectedName = selectedNames.find((selectedName) => selectedName === name);
 
