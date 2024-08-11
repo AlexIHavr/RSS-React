@@ -19,3 +19,11 @@ vi.mock('reduxToolkit/api/api', async () => {
 
   return actual;
 });
+
+vi.mock('next/router', () => ({
+  useRouter: () => ({ push: vi.fn(), query: { name: '' } }),
+}));
+
+vi.mock('next/navigation', () => ({
+  useSearchParams: () => ({ get: () => '1' }),
+}));
