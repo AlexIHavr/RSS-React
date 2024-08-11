@@ -1,0 +1,33 @@
+.pagination {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.page {
+  min-width: 40px;
+  height: 40px;
+  padding: 0;
+
+  color: black;
+
+  background-color: white;
+  box-shadow: 0 0 5px black;
+
+  &.darkBtn {
+    color: white;
+    background-color: black;
+    box-shadow: 0 0 5px white;
+  }
+
+  &.active {
+    color: white;
+    background-color: black;
+    box-shadow: none;
+
+    &.darkBtn {
+      color: black;
+      background-color: white;
+    }
+  }
+}
