@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { Results } from 'components/results/Results';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
 import { store } from 'reduxToolkit/store';
 import { describe, expect, test } from 'vitest';
 
@@ -11,9 +10,7 @@ describe('Tests for card list', () => {
   test('renders the specified number of cards', () => {
     render(
       <Provider store={store}>
-        <BrowserRouter>
-          <Results results={CARD_LIST.results} />,
-        </BrowserRouter>
+        <Results results={CARD_LIST.results} />
       </Provider>,
     );
 
@@ -28,11 +25,7 @@ describe('Tests for card list', () => {
   });
 
   test('message is displayed if no cards are present', () => {
-    render(
-      <BrowserRouter>
-        <Results results={[]} />,
-      </BrowserRouter>,
-    );
+    render(<Results results={[]} />);
 
     const noResults = screen.getByTestId('no-results');
 

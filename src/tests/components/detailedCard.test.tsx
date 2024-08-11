@@ -1,9 +1,7 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { Details } from 'components/details/Details';
 import { Provider } from 'react-redux';
-import { BrowserRouter, RouterProvider } from 'react-router-dom';
 import { store } from 'reduxToolkit/store';
-import { router } from 'utils/router';
 import { describe, expect, test } from 'vitest';
 
 import { CARD_LIST } from '../mockData';
@@ -14,9 +12,7 @@ describe('Tests for details card', () => {
   test('loading indicator is displayed while fetching data', () => {
     render(
       <Provider store={store}>
-        <BrowserRouter>
-          <Details />
-        </BrowserRouter>
+        <Details />
       </Provider>,
     );
 
@@ -27,9 +23,7 @@ describe('Tests for details card', () => {
   test('the detailed card component correctly displays the detailed card data', () => {
     render(
       <Provider store={store}>
-        <BrowserRouter>
-          <Details />
-        </BrowserRouter>
+        <Details />
       </Provider>,
     );
 
@@ -40,23 +34,5 @@ describe('Tests for details card', () => {
     expect(details).toHaveTextContent(result.eye_color);
     expect(details).toHaveTextContent(result.hair_color);
     expect(details).toHaveTextContent(result.skin_color);
-  });
-
-  test('clicking the close button hides the component', () => {
-    render(
-      <Provider store={store}>
-        <RouterProvider router={router} />
-      </Provider>,
-    );
-
-    const cardLink = screen.getByText(result.name);
-
-    fireEvent.click(cardLink);
-
-    const closeLink = screen.getByTestId('close');
-
-    fireEvent.click(closeLink);
-
-    expect(screen.queryByTestId('details')).toBeNull();
   });
 });

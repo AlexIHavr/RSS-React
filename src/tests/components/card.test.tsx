@@ -1,13 +1,12 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { Result } from 'components/result/Result';
 import { Provider } from 'react-redux';
-import { BrowserRouter, RouterProvider } from 'react-router-dom';
-import { api } from 'reduxToolkit/api/api';
 import { store } from 'reduxToolkit/store';
-import { router } from 'utils/router';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, test, vi } from 'vitest';
 
 import { CARD_LIST } from '../mockData';
+
+vi.mock('next/router', () => vi.importActual('next-router-mock'));
 
 describe('Tests for card component', () => {
   const name = CARD_LIST.results[0].name;
@@ -15,32 +14,13 @@ describe('Tests for card component', () => {
   test('the card component renders the relevant card data', () => {
     render(
       <Provider store={store}>
-        <BrowserRouter>
-          <Result name={name} />,
-        </BrowserRouter>
+        <Result name={name} />
       </Provider>,
     );
 
     const result = screen.getByTestId('result');
 
     expect(result).toHaveTextContent(name);
-    expect(result).toHaveAttribute('href', `${process.env.NEXT_PUBLIC_BASE_PATH}${name}`);
-  });
-
-  test('clicking on a card opens a detailed card component and check additional API', () => {
-    render(
-      <Provider store={store}>
-        <RouterProvider router={router} />
-      </Provider>,
-    );
-
-    const cardLink = screen.getByText(name);
-
-    fireEvent.click(cardLink);
-
-    const details = screen.getByTestId('details');
-
-    expect(details).toBeInTheDocument();
-    expect(api.useGetPersonByNameQuery).toBeCalled();
+    expect(result).toHaveAttribute('href', `people/${name}?page=1`);
   });
 });

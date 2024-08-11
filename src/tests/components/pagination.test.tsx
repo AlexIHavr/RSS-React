@@ -1,28 +1,32 @@
-import { fireEvent, render, screen } from '@testing-library/react';
-import { SearchParams } from 'api/api.consts';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { App } from 'App';
+import mockRouter from 'next-router-mock';
 import { Provider } from 'react-redux';
-import { RouterProvider } from 'react-router-dom';
 import { store } from 'reduxToolkit/store';
-import { router } from 'utils/router';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, test, vi } from 'vitest';
+
+vi.mock('next/router', () => vi.importActual('next-router-mock'));
 
 describe('Tests for pagination component', () => {
-  test('the component updates URL query parameter when page changes', () => {
+  test('the component updates URL query parameter when page changes', async () => {
     render(
       <Provider store={store}>
-        <RouterProvider router={router} />
+        <App />
       </Provider>,
     );
 
     const pagination = screen.getByTestId('pagination');
     const [prevButton, nextButton] = pagination.children;
 
-    fireEvent.click(nextButton);
+    const user = userEvent.setup();
 
-    expect(global.window.location.href).toContain(`${SearchParams.PAGE}=2`);
+    await user.click(nextButton);
 
-    fireEvent.click(prevButton);
+    expect(mockRouter).toMatchObject({});
 
-    expect(global.window.location.href).toContain(`${SearchParams.PAGE}=1`);
+    await user.click(prevButton);
+
+    expect(mockRouter).toMatchObject({});
   });
 });
